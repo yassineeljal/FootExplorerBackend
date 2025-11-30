@@ -32,3 +32,11 @@
 {"duration":"4ms","level":"info","message":"GET /api/v1/auth/me -> 200 (4ms)","statusCode":200,"timestamp":"2025-11-30T06:06:26.388Z"}
 {"duration":"3ms","level":"info","message":"GET /api/v1/auth/me -> 200 (3ms)","statusCode":200,"timestamp":"2025-11-30T06:06:28.194Z"}
 {"duration":"3ms","level":"info","message":"GET /api/v1/auth/me -> 200 (3ms)","statusCode":200,"timestamp":"2025-11-30T06:06:47.924Z"}
+{"duration":"20ms","level":"warn","message":"POST /api/v1/auth/register -> 409 (20ms)","statusCode":409,"timestamp":"2025-11-30T06:52:19.732Z"}
+{"duration":"83ms","level":"info","message":"POST /api/v1/auth/login -> 200 (83ms)","statusCode":200,"timestamp":"2025-11-30T06:52:23.783Z"}
+{"duration":"6ms","level":"info","message":"GET /api/v1/auth/me -> 200 (6ms)","statusCode":200,"timestamp":"2025-11-30T06:52:39.104Z"}
+{"duration":"4ms","level":"info","message":"GET /api/v1/teams/33/overview?league=39&season=2024 -> 200 (4ms)","statusCode":200,"timestamp":"2025-11-30T06:52:56.107Z"}
+{"duration":"3ms","level":"info","message":"GET /api/v1/players/154/stats?league=39&season=2024 -> 200 (3ms)","statusCode":200,"timestamp":"2025-11-30T06:53:23.475Z"}
+{"duration":"1ms","level":"warn","message":"GET /api/v1/players/top?league=39&season=2024&type=scorers -> 401 (1ms)","statusCode":401,"timestamp":"2025-11-30T06:53:40.275Z"}
+{"duration":"1ms","level":"info","message":"GET /api/v1/players/top?league=39&season=2024&type=scorers -> 200 (1ms)","statusCode":200,"timestamp":"2025-11-30T06:53:50.365Z"}
+{"duration":"1ms","level":"info","message":"GET /api/v1/leagues/39/overview?season=2024 -> 200 (1ms)","statusCode":200,"timestamp":"2025-11-30T06:54:02.434Z"}
