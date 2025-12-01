@@ -1,28 +1,31 @@
-import {Document, Schema, Model} from 'mongoose';
-import mongoose from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IPlayer extends Document {
-    id: number ;
-    name: string ;
-    first_name: string ;
-    last_name: string ;
-    age: number ;
-    birth_date: Date ;
-    nationality: string ;
-    photo: string ;
+  apiId: number;       
+  name: string;        
+  firstname: string;  
+  lastname: string;    
+  age: number;        
+  birth: {            
+    date: string;     
+    place: string;     
+    country: string;   
+  };
+  nationality: string; 
 }
-const PlayerSchema: Schema = new Schema({
-    _id: { type: Number, required: true, unique: true },
-    name: { type: String, required: true },
-    first_name: { type: String, required: true },
-    last_name: { type: String, required: true },
-    age: { type: Number, required: true },
-    birth_date: { type: Date, required: true },
-    nationality: { type: String, required: true },
-    photo: { type: String, required: true },
-}, {
-    timestamps: true,
-});
-const Player: Model<IPlayer> = mongoose.model<IPlayer>('Player', PlayerSchema);
 
-export default Player;
+const PlayerSchema: Schema = new Schema({
+  apiId: { type: Number, required: true, unique: true },
+  name: { type: String, required: true },
+  firstname: { type: String },
+  lastname: { type: String },
+  age: { type: Number },
+  birth: {
+    date: { type: String },
+    place: { type: String },
+    country: { type: String }
+  },
+  nationality: { type: String }
+});
+
+export default mongoose.model<IPlayer>('Player', PlayerSchema);

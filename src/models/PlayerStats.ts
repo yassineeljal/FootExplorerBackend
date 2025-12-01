@@ -1,35 +1,23 @@
-import {Document, Schema, Model} from 'mongoose';
-import mongoose from 'mongoose';
-import Team from './Team';
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IPlayerStats extends Document {
-    player_id: number ;
-    team_id: number ;
-    league_id: number ;
-    season: number ;
-    minute_Played: number ;
-    position: string ;
-    rating: number ;
-    goals_total: number ;
-    assists: number ;
-    card_yellow: number ;
-    card_red: number ;
+  player: mongoose.Types.ObjectId; 
+  goals: number;    
+  minutes: number;  
+  season: number;
+  team: mongoose.Types.ObjectId;
+  league: mongoose.Types.ObjectId;
 }
 
-
-const PlayerStatsSchema: Schema<IPlayerStats> = new Schema({
-  player_id: { type: Number, ref: 'Player', required: true },
-  team_id: { type: Number, ref: 'Team', required: true },
-  league_id: { type: Number, ref: 'League', required: true },
+const PlayerStatsSchema: Schema = new Schema({
+  player: { type: Schema.Types.ObjectId, ref: 'Player', required: true },
+  goals: { type: Number, required: true, default: 0 },
+  minutes: { type: Number, required: true, default: 0 },
   season: { type: Number, required: true },
-  minute_Played: { type: Number, required: true },
-  position: { type: String, required: true },
-  rating: { type: Number, required: true },
-  goals_total: { type: Number, required: true },
-  assists: { type: Number, required: true },
-  card_yellow: { type: Number, required: true },
-  card_red: { type: Number, required: true },
-}, { timestamps: true });
+  team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
+  league: { type: Schema.Types.ObjectId, ref: 'League', required: true }
+});
 
+PlayerStatsSchema.index({ player: 1, season: 1, team: 1 }, { unique: true });
 
-
+export default mongoose.model<IPlayerStats>('PlayerStats', PlayerStatsSchema);

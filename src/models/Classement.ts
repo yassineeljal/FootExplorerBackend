@@ -1,23 +1,21 @@
-import {Document, Schema, Model, } from 'mongoose';
-import mongoose from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-export interface IClassement extends Document {
-    rank: number ;
-    team_id: number ;
-    league_id: number ;
-    points: number ;
-    goalsDiff: number ;
-    description?: string ;
+export interface IStanding extends Document {
+  team: mongoose.Types.ObjectId;
+  rank: number;    
+  points: number;  
+  league: mongoose.Types.ObjectId;
+  season: number;
 }
 
+const StandingSchema: Schema = new Schema({
+  team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
+  rank: { type: Number, required: true },
+  points: { type: Number, required: true },
+  league: { type: Schema.Types.ObjectId, ref: 'League', required: true },
+  season: { type: Number, required: true }
+});
 
+StandingSchema.index({ team: 1, league: 1, season: 1 }, { unique: true });
 
-const ClassementSchema: Schema<IClassement> = new Schema({
-    rank: { type: Number, required: true },
-    team_id: { type: Number, ref: 'Team', required: true },
-    league_id: { type: Number, ref: 'League', required: true },
-    points: { type: Number, required: true },
-    goalsDiff: { type: Number, required: true },
-    description: { type: String, required: false },
-}, { timestamps: true });
-
+export default mongoose.model<IStanding>('Standing', StandingSchema);
