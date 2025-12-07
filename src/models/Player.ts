@@ -12,6 +12,7 @@ export interface IPlayer extends Document {
     country: string;   
   };
   nationality: string; 
+  photo: string; 
 }
 
 const PlayerSchema: Schema = new Schema({
@@ -25,7 +26,8 @@ const PlayerSchema: Schema = new Schema({
     place: { type: String },
     country: { type: String }
   },
-  nationality: { type: String }
+  nationality: { type: String },
+  photo: { type: String }
 });
 
 export default mongoose.model<IPlayer>('Player', PlayerSchema);

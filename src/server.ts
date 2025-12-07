@@ -17,7 +17,12 @@ const corsOrigins = config.get<string[]>("security.cors.origins");
 const rateLimitConfig = config.get<{ windowMs: number; max: number }>(
   "security.rateLimit"
 );
-const dbUri = config.get<string>("db.uri");
+
+
+//const dbUri = config.get<string>("db.uri");
+// On remplace la config par ton lien direct vers Atlas
+const dbUri = "mongodb+srv://ardaozanyildiz11_db_user:12851285Ay@collectecluster.bbzcbsh.mongodb.net/?appName=collecteCluster";
+
 const port = config.get<number>("server.http.port");
 
 const app = express();

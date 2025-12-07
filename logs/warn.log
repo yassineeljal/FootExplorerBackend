@@ -21,3 +21,4 @@
 {"duration":"4ms","level":"warn","message":"GET /api/auth/me -> 404 (4ms)","statusCode":404,"timestamp":"2025-11-30T06:02:05.733Z"}
 {"duration":"20ms","level":"warn","message":"POST /api/v1/auth/register -> 409 (20ms)","statusCode":409,"timestamp":"2025-11-30T06:52:19.732Z"}
 {"duration":"1ms","level":"warn","message":"GET /api/v1/players/top?league=39&season=2024&type=scorers -> 401 (1ms)","statusCode":401,"timestamp":"2025-11-30T06:53:40.275Z"}
+{"duration":"45ms","level":"warn","message":"POST /api/v1/auth/register -> 409 (45ms)","statusCode":409,"timestamp":"2025-12-07T00:30:55.141Z"}
