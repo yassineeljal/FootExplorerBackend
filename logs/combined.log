@@ -55,3 +55,16 @@
 {"duration":"158ms","level":"info","message":"POST /api/v1/auth/register -> 201 (158ms)","statusCode":201,"timestamp":"2025-12-07T00:31:21.349Z"}
 {"duration":"1296ms","level":"info","message":"GET /api/v1/players/top?league=39&season=2023 -> 200 (1296ms)","statusCode":200,"timestamp":"2025-12-07T00:31:31.086Z"}
 {"duration":"20ms","level":"info","message":"GET /api/v1/players/search?q=saka -> 200 (20ms)","statusCode":200,"timestamp":"2025-12-07T00:31:42.743Z"}
+{"duration":"8ms","level":"warn","message":"GET /api/v1/players/search?q=saka -> 401 (8ms)","statusCode":401,"timestamp":"2025-12-10T18:09:01.216Z"}
+{"duration":"741ms","level":"warn","message":"POST /api/v1/auth/register -> 409 (741ms)","statusCode":409,"timestamp":"2025-12-10T18:09:13.242Z"}
+{"duration":"358ms","level":"info","message":"POST /api/v1/auth/register -> 201 (358ms)","statusCode":201,"timestamp":"2025-12-10T18:10:00.314Z"}
+{"duration":"74ms","level":"info","message":"GET /api/v1/players/search?q=saka -> 200 (74ms)","statusCode":200,"timestamp":"2025-12-10T18:10:13.641Z"}
+{"duration":"3ms","level":"warn","message":"POST /api/v1/users/favorites -> 401 (3ms)","statusCode":401,"timestamp":"2025-12-10T18:10:25.456Z"}
+{"duration":"102ms","level":"info","message":"POST /api/v1/users/favorites -> 200 (102ms)","statusCode":200,"timestamp":"2025-12-10T18:10:35.460Z"}
+{"duration":"102ms","level":"info","message":"POST /api/v1/users/favorites -> 200 (102ms)","statusCode":200,"timestamp":"2025-12-10T18:13:01.526Z"}
+{"duration":"309ms","level":"info","message":"GET /api/v1/players/top?league=39&season=2023 -> 200 (309ms)","statusCode":200,"timestamp":"2025-12-10T19:16:15.582Z"}
+{"duration":"74ms","level":"info","message":"GET /api/v1/players/search?q=Haaland -> 200 (74ms)","statusCode":200,"timestamp":"2025-12-10T19:16:27.654Z"}
+{"duration":"110ms","level":"info","message":"GET /api/v1/leagues/39/overview?season=2023 -> 200 (110ms)","statusCode":200,"timestamp":"2025-12-10T19:16:38.645Z"}
+{"duration":"205ms","level":"info","message":"POST /api/v1/users/favorites -> 200 (205ms)","statusCode":200,"timestamp":"2025-12-10T19:17:59.672Z"}
+{"duration":"70ms","level":"info","message":"POST /api/v1/users/favorites -> 200 (70ms)","statusCode":200,"timestamp":"2025-12-10T19:19:27.448Z"}
+{"duration":"281ms","level":"info","message":"GET /api/v1/users/favorites -> 200 (281ms)","statusCode":200,"timestamp":"2025-12-10T19:19:34.411Z"}

@@ -1,11 +1,13 @@
+import TeamModel from "../models/Team";
+
 export async function getTeamOverview(params: {
   teamId: number;
   leagueId: number;
   season: number;
 }) {
-  
-  return {
-    message: "Team overview service n'est pas encore implémenté'",
-    params
-  };
+    const { teamId } = params;
+ 
+    const team = await TeamModel.findOne({ apiId: teamId }).lean();
+   
+    return team;
 }
