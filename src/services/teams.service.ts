@@ -5,9 +5,9 @@ export async function getTeamOverview(params: {
   leagueId: number;
   season: number;
 }) {
-    const { teamId } = params;
- 
-    const team = await TeamModel.findOne({ apiId: teamId }).lean();
-   
-    return team;
+  const { teamId } = params;
+
+  const team = await TeamModel.findOne({ apiId: teamId }).lean();
+
+  return team;
 }

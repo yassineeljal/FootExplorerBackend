@@ -4,8 +4,11 @@ import * as playersService from "../services/players.service";
 const ALLOWED_TYPES = ["scorers", "assists", "young"] as const;
 type TopPlayerType = (typeof ALLOWED_TYPES)[number];
 
-// 1. Détails d'un joueur
-export async function getPlayerStats(req: Request, res: Response, next: NextFunction) {
+export async function getPlayerStats(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const playerId = Number(req.params.playerId);
     const leagueId = req.query.league ? Number(req.query.league) : undefined;
@@ -33,8 +36,11 @@ export async function getPlayerStats(req: Request, res: Response, next: NextFunc
   }
 }
 
-// 2. Top joueurs (Meilleurs buteurs, etc.)
-export async function getTopPlayers(req: Request, res: Response, next: NextFunction) {
+export async function getTopPlayers(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const leagueId = req.query.league ? Number(req.query.league) : undefined;
     const season = req.query.season ? Number(req.query.season) : undefined;
@@ -67,10 +73,8 @@ export async function getTopPlayers(req: Request, res: Response, next: NextFunct
   }
 }
 
-// --- AJOUT DE LA FONCTION RECHERCHE ---
 export async function search(req: Request, res: Response, next: NextFunction) {
   try {
-    // On récupère le paramètre 'q' dans l'URL (ex: /players/search?q=mbappe)
     const query = req.query.q as string;
 
     if (!query || query.length < 3) {

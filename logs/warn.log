@@ -25,3 +25,4 @@
 {"duration":"8ms","level":"warn","message":"GET /api/v1/players/search?q=saka -> 401 (8ms)","statusCode":401,"timestamp":"2025-12-10T18:09:01.216Z"}
 {"duration":"741ms","level":"warn","message":"POST /api/v1/auth/register -> 409 (741ms)","statusCode":409,"timestamp":"2025-12-10T18:09:13.242Z"}
 {"duration":"3ms","level":"warn","message":"POST /api/v1/users/favorites -> 401 (3ms)","statusCode":401,"timestamp":"2025-12-10T18:10:25.456Z"}
+{"duration":"3ms","level":"warn","message":"GET /api/v1/players/search?q= -> 400 (3ms)","statusCode":400,"timestamp":"2025-12-12T16:54:28.362Z"}
