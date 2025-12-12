@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import * as teamsService from "../services/teams.service";
 
-export async function getTeamOverview(req: Request, res: Response, next: NextFunction) {
+export async function getTeamOverview(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const teamId = Number(req.params.teamId);
     const leagueId = req.query.league ? Number(req.query.league) : undefined;

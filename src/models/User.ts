@@ -7,6 +7,9 @@ export interface IUser extends Document {
   name: string;
   password: string;
   comparePassword: (p: string) => Promise<boolean>;
+  favoriteLeagues: number[]; 
+  favoriteTeams: number[];
+  favoritePlayers: number[];
 }
 
 const UserSchema = new Schema<IUser>(
@@ -14,7 +17,12 @@ const UserSchema = new Schema<IUser>(
     email:    { type: String, required: true, unique: true, lowercase: true, trim: true },
     username: { type: String, required: true, unique: true, trim: true },
     name:     { type: String, required: true, trim: true },
-    password: { type: String, required: true, minlength: 8, select: false } 
+    password: { type: String, required: true, minlength: 8, select: false },
+
+   
+    favoriteLeagues: { type: [Number], default: [] },
+    favoriteTeams:   { type: [Number], default: [] },
+    favoritePlayers: { type: [Number], default: [] },
   },
   { timestamps: true }
 );

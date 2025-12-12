@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import * as leaguesService from "../services/leagues.service";
 
-export async function getLeagueOverview(req: Request, res: Response, next: NextFunction) {
+export async function getLeagueOverview(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const leagueId = Number(req.params.leagueId);
     const season = req.query.season ? Number(req.query.season) : undefined;

@@ -6,9 +6,9 @@ import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/users.routes";
-import teamRoutes from "./routes/teams.routes";    
-import playerRoutes from "./routes/players.routes"; 
-import leagueRoutes from "./routes/leagues.routes"; 
+import teamRoutes from "./routes/teams.routes";
+import playerRoutes from "./routes/players.routes";
+import leagueRoutes from "./routes/leagues.routes";
 
 import { logRequest, logError } from "./middlewares/logging";
 
@@ -17,7 +17,9 @@ const corsOrigins = config.get<string[]>("security.cors.origins");
 const rateLimitConfig = config.get<{ windowMs: number; max: number }>(
   "security.rateLimit"
 );
+
 const dbUri = config.get<string>("db.uri");
+
 const port = config.get<number>("server.http.port");
 
 const app = express();
@@ -43,7 +45,6 @@ app.use(`${baseApi}/users`, userRoutes);
 app.use(`${baseApi}/teams`, teamRoutes);
 app.use(`${baseApi}/players`, playerRoutes);
 app.use(`${baseApi}/leagues`, leagueRoutes);
-
 
 app.use((req, res, next) => {
   const error: any = new Error(
@@ -78,9 +79,7 @@ mongoose
     });
   })
   .catch((err) => {
-    console.error(
-      "ERREUR FATALE DE CONNEXION BD. Le serveur NE démarre PAS."
-    );
+    console.error("ERREUR FATALE DE CONNEXION BD. Le serveur NE démarre PAS.");
     console.error(`Détails de l'erreur : ${err.message}`);
     process.exit(1);
   });

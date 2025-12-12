@@ -7,6 +7,7 @@ export interface IPlayerStats extends Document {
   season: number;
   team: mongoose.Types.ObjectId;
   league: mongoose.Types.ObjectId;
+  rating: string;
 }
 
 const PlayerStatsSchema: Schema = new Schema({
@@ -15,7 +16,8 @@ const PlayerStatsSchema: Schema = new Schema({
   minutes: { type: Number, required: true, default: 0 },
   season: { type: Number, required: true },
   team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
-  league: { type: Schema.Types.ObjectId, ref: 'League', required: true }
+  league: { type: Schema.Types.ObjectId, ref: 'League', required: true },
+  rating: { type: String },
 });
 
 PlayerStatsSchema.index({ player: 1, season: 1, team: 1 }, { unique: true });
