@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_1 = require("../middlewares/auth");
+const players_controller_1 = require("../controllers/players.controller");
+const router = (0, express_1.Router)();
+router.get("/:playerId/stats", auth_1.requireAuth, players_controller_1.getPlayerStats);
+router.get("/top", auth_1.requireAuth, players_controller_1.getTopPlayers);
+router.get("/search", auth_1.requireAuth, players_controller_1.search);
+exports.default = router;
