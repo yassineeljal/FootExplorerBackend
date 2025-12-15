@@ -265,3 +265,5 @@
 {"duration":"2ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (2ms)","statusCode":500,"timestamp":"2025-12-14T23:55:56.145Z"}
 {"duration":"2ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (2ms)","statusCode":500,"timestamp":"2025-12-14T23:57:41.245Z"}
 {"duration":"3ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (3ms)","statusCode":500,"timestamp":"2025-12-14T23:58:27.126Z"}
+{"duration":"111ms","level":"warn","message":"GET /api/v1/teams/stats?team=Paris&season=2025 -> 404 (111ms)","statusCode":404,"timestamp":"2025-12-15T22:03:46.401Z"}
+{"duration":"83ms","level":"warn","message":"GET /api/v1/teams/stats?team=Liverpool&season=2025 -> 404 (83ms)","statusCode":404,"timestamp":"2025-12-15T22:03:54.030Z"}
