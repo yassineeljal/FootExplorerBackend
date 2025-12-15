@@ -21,51 +21,52 @@ export async function getTopPlayers(params: {
   })
     .sort({ goals: -1 })
     .limit(20)
-    .populate({
-      path: "player",
-      select: "apiId name photo firstname lastname",
-    })
-    .populate({
-      path: "team",
-      select: "apiId name logo",
-    })
+    .populate("player")
+    .populate("team")
     .lean();
 
-  return topStats.map((stats: any) => ({
-    player: {
-      id: stats.player.apiId,
-      name: stats.player.name,
-      photo: stats.player.photo,
-      firstname: stats.player.firstname,
-      lastname: stats.player.lastname,
-    },
-    statistics: [
-      {
-        team: {
-          id: stats.team.apiId,
-          name: stats.team.name,
-          logo: stats.team.logo,
-        },
-        games: {
-          rating: stats.rating,
-        },
-        goals: {
-          total: stats.goals,
-        },
+  return topStats.map((stats: any) => {
+    if (!stats.player) return null;
+
+    return {
+      player: {
+        id: stats.player.apiId,
+        name: stats.player.name,
+        photo: stats.player.photo,
+        firstname: stats.player.firstname,
+        lastname: stats.player.lastname,
       },
-    ],
-  }));
+      statistics: [
+        {
+          team: {
+            id: stats.team?.apiId,
+            name: stats.team?.name,
+            logo: stats.team?.logo,
+          },
+          games: {
+            rating: stats.rating || "N/A",
+          },
+          goals: {
+            total: stats.goals || 0,
+          },
+        },
+      ],
+    };
+  }).filter(p => p !== null);
 }
 
 export async function searchPlayers(query: string) {
   const lowerQuery = query.toLowerCase();
   const players = await PlayerModel.find({
-    name: lowerQuery,
+    name: { $regex: lowerQuery, $options: 'i' },
   })
     .limit(10)
     .lean();
 
-  return players;
+  return players.map((p: any) => ({
+    id: p.apiId,
+    ...p
+  }));
 }
 
 export async function getPlayerStats(params: {
@@ -81,18 +82,13 @@ export async function getPlayerStats(params: {
     player: player._id,
     season: params.season,
   })
-    .populate({
-      path: "team",
-      select: "apiId name logo",
-    })
-    .populate({
-      path: "league",
-      select: "apiId name",
-    })
+    .populate("team")
+    .populate("league")
     .lean();
 
   return {
     player: player,
     stats: stats,
+    statistics: stats
   };
 }

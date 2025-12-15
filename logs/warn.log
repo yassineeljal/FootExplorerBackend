@@ -254,3 +254,14 @@
 {"duration":"7ms","level":"warn","message":"GET /api/v1/teams/stats?team=Liverpo&season=2025 -> 404 (7ms)","statusCode":404,"timestamp":"2025-12-14T03:16:31.030Z"}
 {"duration":"7ms","level":"warn","message":"GET /api/v1/teams/stats?team=Liverpoo&season=2025 -> 404 (7ms)","statusCode":404,"timestamp":"2025-12-14T03:16:31.459Z"}
 {"duration":"7ms","level":"warn","message":"GET /api/v1/teams/stats?team=Ac+Milan&season=2025 -> 404 (7ms)","statusCode":404,"timestamp":"2025-12-14T03:27:34.576Z"}
+{"duration":"24ms","level":"warn","message":"GET /api/v1/users/favorites -> 404 (24ms)","statusCode":404,"timestamp":"2025-12-14T22:13:07.901Z"}
+{"duration":"2ms","level":"warn","message":"POST /api/v1/auth/register -> 400 (2ms)","statusCode":400,"timestamp":"2025-12-14T22:17:23.810Z"}
+{"duration":"3ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (3ms)","statusCode":500,"timestamp":"2025-12-14T22:19:47.420Z"}
+{"duration":"555ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (555ms)","statusCode":500,"timestamp":"2025-12-14T22:50:35.062Z"}
+{"duration":"39ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (39ms)","statusCode":500,"timestamp":"2025-12-14T23:43:33.656Z"}
+{"duration":"5ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (5ms)","statusCode":500,"timestamp":"2025-12-14T23:43:53.344Z"}
+{"duration":"2ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (2ms)","statusCode":500,"timestamp":"2025-12-14T23:44:12.972Z"}
+{"duration":"2ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (2ms)","statusCode":500,"timestamp":"2025-12-14T23:46:33.496Z"}
+{"duration":"2ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (2ms)","statusCode":500,"timestamp":"2025-12-14T23:55:56.145Z"}
+{"duration":"2ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (2ms)","statusCode":500,"timestamp":"2025-12-14T23:57:41.245Z"}
+{"duration":"3ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (3ms)","statusCode":500,"timestamp":"2025-12-14T23:58:27.126Z"}
