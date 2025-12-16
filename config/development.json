@@ -7,7 +7,7 @@
     "trustProxy": false
   },
   "db": { 
-    "uri": "mongodb://localhost:27017/footexplorer" 
+    "uri": "mongodb://localhost:27017/football_db" 
   },
   "security": {
     "jwt": { 
