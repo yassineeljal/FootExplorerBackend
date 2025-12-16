@@ -4,18 +4,18 @@
   },
   "server": {
     "http": { "enabled": true, "port": 3000 },
-    "trustProxy": false
+    "trustProxy": true
   },
   "db": { 
-    "uri": "mongodb://localhost:27017/footexplorer" 
+    "uri": "mongodb+srv://yassinedb:1212@yassine.tw4qzad.mongodb.net/footexplorer?retryWrites=true&w=majority" 
   },
   "security": {
     "jwt": { 
-      "secret": "your-secret-key-here", 
+      "secret": "prod-secret-key-change-me", 
       "expiresIn": "1d" 
     },
     "cors": { 
-      "origins": ["http://localhost:5173", "http://localhost:3000"] 
+      "origins": ["*"] 
     },
     "rateLimit": { 
       "windowMs": 900000, 

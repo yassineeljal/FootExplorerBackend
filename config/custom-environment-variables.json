@@ -1,0 +1,26 @@
+{
+  "db": {
+    "uri": "DB_URI"
+  },
+  "server": {
+    "http": {
+      "port": "PORT"
+    }
+  },
+  "security": {
+    "jwt": {
+      "secret": "JWT_SECRET",
+      "expiresIn": "JWT_EXPIRES_IN"
+    },
+    "cors": {
+      "origins": {
+        "__name": "CORS_ORIGINS",
+        "__format": "json"
+      }
+    },
+    "rateLimit": {
+      "windowMs": "RATE_LIMIT_WINDOW_MS",
+      "max": "RATE_LIMIT_MAX"
+    }
+  }
+}

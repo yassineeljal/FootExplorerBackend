@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express, { Request, Response, NextFunction } from "express";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
@@ -13,7 +16,7 @@ import leagueRoutes from "./routes/leagues.routes";
 import { logRequest, logError } from "./middlewares/logging";
 
 const baseApi = config.get<string>("app.basePath");
-const corsOrigins = config.get<string[]>("security.cors.origins");
+const corsOrigins = config.get<string>("security.cors.origins");
 const rateLimitConfig = config.get<{ windowMs: number; max: number }>(
   "security.rateLimit"
 );
