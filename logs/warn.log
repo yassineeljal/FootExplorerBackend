@@ -391,3 +391,12 @@
 {"duration":"1ms","level":"warn","message":"POST /api/v1/auth/login -> 401 (1ms)","statusCode":401,"timestamp":"2025-12-17T22:11:50.801Z"}
 {"duration":"0ms","level":"warn","message":"GET /api/v1/users/favorites -> 401 (0ms)","statusCode":401,"timestamp":"2025-12-17T22:11:50.860Z"}
 {"duration":"1ms","level":"warn","message":"GET /api/v1/auth/me -> 401 (1ms)","statusCode":401,"timestamp":"2025-12-17T22:11:50.866Z"}
+{"duration":"0ms","level":"warn","message":"GET /api/v1/users/me -> 401 (0ms)","statusCode":401,"timestamp":"2025-12-17T22:47:05.400Z"}
+{"duration":"2ms","level":"warn","message":"POST /api/v1/auth/register -> 409 (2ms)","statusCode":409,"timestamp":"2025-12-17T22:47:05.428Z"}
+{"duration":"1ms","level":"warn","message":"PATCH /api/v1/users/me -> 401 (1ms)","statusCode":401,"timestamp":"2025-12-17T22:47:05.470Z"}
+{"duration":"48ms","level":"warn","message":"POST /api/v1/auth/login -> 401 (48ms)","statusCode":401,"timestamp":"2025-12-17T22:47:05.650Z"}
+{"duration":"2ms","level":"warn","message":"POST /api/v1/auth/login -> 401 (2ms)","statusCode":401,"timestamp":"2025-12-17T22:47:05.658Z"}
+{"duration":"1ms","level":"warn","message":"POST /api/v1/users/favorites -> 400 (1ms)","statusCode":400,"timestamp":"2025-12-17T22:47:05.673Z"}
+{"duration":"1ms","level":"warn","message":"POST /api/v1/users/favorites -> 401 (1ms)","statusCode":401,"timestamp":"2025-12-17T22:47:05.679Z"}
+{"duration":"1ms","level":"warn","message":"GET /api/v1/auth/me -> 401 (1ms)","statusCode":401,"timestamp":"2025-12-17T22:47:05.725Z"}
+{"duration":"0ms","level":"warn","message":"GET /api/v1/users/favorites -> 401 (0ms)","statusCode":401,"timestamp":"2025-12-17T22:47:05.750Z"}
