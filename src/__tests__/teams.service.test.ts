@@ -69,6 +69,19 @@ describe('teams.service', () => {
             ).rejects.toThrow();
         });
 
+        test('erreur si equipe existe mais pas de stats pour la saison', async () => {
+            await TeamModel.create({
+                apiId: 789,
+                name: 'FC Barcelona',
+                code: 'BAR',
+                country: 'Spain'
+            });
+
+            await expect(
+                getTeamStats({ teamName: 'FC Barcelona', season: 2025 })
+            ).rejects.toThrow('Statistiques non trouvées');
+        });
+
     });
 
 });

@@ -1,0 +1,45 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 10
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 20
+      arrivalRate: 10
+      name: "Charge normale"
+    - duration: 10
+      arrivalRate: 20
+      name: "Pic de charge"
+
+scenarios:
+  - name: "Route publique - Health check"
+    flow:
+      - get:
+          url: "/"
+
+  - name: "Inscription utilisateur"
+    flow:
+      - post:
+          url: "/api/v1/auth/register"
+          json:
+            email: "user{{ $randomNumber() }}@test.com"
+            username: "user{{ $randomNumber() }}"
+            password: "password123"
+            name: "Test User"
+
+  - name: "Flow complet - Register puis Login"
+    flow:
+      - post:
+          url: "/api/v1/auth/register"
+          json:
+            email: "flow{{ $randomNumber() }}@test.com"
+            username: "flow{{ $randomNumber() }}"
+            password: "password123"
+            name: "Flow User"
+          capture:
+            - json: "$.token"
+              as: "authToken"
+      - get:
+          url: "/api/v1/auth/me"
+          headers:
+            Authorization: "Bearer {{ authToken }}"

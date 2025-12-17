@@ -54,3 +54,5 @@
 {"duration":"2ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (2ms)","statusCode":500,"timestamp":"2025-12-14T23:55:56.145Z"}
 {"duration":"2ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (2ms)","statusCode":500,"timestamp":"2025-12-14T23:57:41.245Z"}
 {"duration":"3ms","level":"error","message":"POST /api/v1/users/favorites -> 500 (3ms)","statusCode":500,"timestamp":"2025-12-14T23:58:27.126Z"}
+{"duration":"26ms","level":"error","message":"POST /api/v1/auth/register -> 500 (26ms)","statusCode":500,"timestamp":"2025-12-17T21:55:57.980Z"}
+{"duration":"4ms","level":"error","message":"POST /api/v1/auth/register -> 500 (4ms)","statusCode":500,"timestamp":"2025-12-17T21:56:16.565Z"}

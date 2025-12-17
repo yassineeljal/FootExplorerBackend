@@ -1,4 +1,4 @@
-import { getMeService, patchMeService, manageFavoriteService, getMyFavoritesService } from '../services/users.service';
+import { getMeService, patchMeService, manageFavoriteService, getMyFavoritesService, getByIdAdminService } from '../services/users.service';
 import { UserModel } from '../models/User';
 
 describe('users.service', () => {
@@ -48,6 +48,30 @@ describe('users.service', () => {
 
             expect(result).toHaveProperty('error');
             expect((result as any).error.status).toBe(404);
+        });
+
+    });
+
+    describe('getByIdAdminService', () => {
+
+        test('retourne le user si id valide', async () => {
+            const user = await UserModel.create({
+                email: 'admin@test.com',
+                username: 'adminuser',
+                password: 'password123',
+                name: 'Admin User'
+            });
+
+            const result = await getByIdAdminService(user._id.toString());
+
+            expect(result).not.toBeNull();
+            expect(result?.email).toBe('admin@test.com');
+        });
+
+        test('retourne null si id invalide', async () => {
+            const result = await getByIdAdminService('507f1f77bcf86cd799439011');
+
+            expect(result).toBeNull();
         });
 
     });
