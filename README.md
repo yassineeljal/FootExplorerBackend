@@ -2,14 +2,14 @@
 
 **Cours 420-514-MV - Projet Final de Session**
 
-FootExplorer est un service de collecte et d'analyse de données de football. L'API permet d'explorer les statistiques des joueurs, équipes et ligues des 5 grands championnats européens.
+FootExplorer, c'est notre projet de collecte et d'analyse de données de football. En gros, on récupère les stats des joueurs, équipes et ligues des 5 grands championnats européens, et on les expose via une API REST.
 
 ---
 
 ## Table des matières
 
 1. [Architecture et Conception](#1-architecture-et-conception)
-2. [Détails des Données](#2-détails-des-données)
+2. [Nos Données](#2-nos-données)
 3. [Guide d'Installation](#3-guide-dinstallation)
 4. [Utilisation de l'API](#4-utilisation-de-lapi)
 5. [Tests](#5-tests)
@@ -18,106 +18,98 @@ FootExplorer est un service de collecte et d'analyse de données de football. L'
 
 ## 1. Architecture et Conception
 
-### Stack Technique
+### Pourquoi ces technos ?
 
-| Technologie | Rôle |
-|-------------|------|
-| **Node.js** | Runtime JavaScript côté serveur |
-| **Express** | Framework web pour les routes et middlewares |
-| **MongoDB** | Base de données NoSQL pour stocker les données |
-| **Mongoose** | ODM pour modéliser les données MongoDB |
-| **TypeScript** | Typage statique pour plus de robustesse |
-| **Python** | Scripts de collecte de données depuis l'API externe |
+On a choisi **Node.js avec Express** parce que c'est ce qu'on connaissait le mieux et ça nous permettait d'aller vite. Pour la base de données, on est partis sur **MongoDB** pour sa flexibilité avec les données JSON.
 
-### Structure du Projet
+On a utilisé **TypeScript** plutôt que JavaScript pour avoir un typage strict et éviter les erreurs.
+
+Pour la collecte des données depuis l'API externe, on a utilisé **Python**. C'était plus simple pour faire des scripts de collecte qu'on lance manuellement, sans avoir à les intégrer dans le serveur principal.
+
+### Comment on a organisé le code
+
+On a suivi le pattern **MVC** (Model-View-Controller), mais adapté pour une API :
+
+- Les **Models** (dans `src/models/`) définissent la structure de nos données : User, Team, Player, League, etc.
+- Les **Controllers** (dans `src/controllers/`) reçoivent les requêtes HTTP et renvoient les réponses.
+- Les **Services** (dans `src/services/`) contiennent la vraie logique. Si le controller c'est le serveur au restaurant, le service c'est le cuisinier.
+
+Cette séparation nous a aidés quand on travaillait à plusieurs : un pouvait modifier un service pendant qu'un autre travaillait sur le controller, sans se marcher dessus.
+
+On a aussi utilisé des **middlewares** pour gérer les trucs communs à plusieurs routes :
+- `requireAuth` vérifie que l'utilisateur a un token JWT valide
+- `rateLimit` bloque les gens qui font trop de requêtes (protection contre les abus)
+- `logRequest` garde une trace de toutes les requêtes dans un fichier log
+
+### Structure du projet
 
 ```
 FootExplorerBackend/
 ├── src/
-│   ├── controllers/    # Logique de contrôle des requêtes
+│   ├── controllers/    # Gère les requêtes
 │   ├── services/       # Logique métier
-│   ├── models/         # Schémas Mongoose
+│   ├── models/         # Schémas MongoDB
 │   ├── routes/         # Définition des endpoints
-│   ├── middlewares/    # Auth, logging, validation
+│   ├── middlewares/    # Auth, logging, etc.
 │   ├── tests/          # Tests unitaires et d'intégration
-│   ├── app.ts          # Configuration Express
+│   ├── app.ts          # Config Express
 │   └── server.ts       # Point d'entrée
-├── collectePython/     # Scripts de collecte de données
-├── config/             # Configuration (ports, DB, JWT)
+├── collectePython/     # Scripts de collecte
+├── config/             # Configuration
 └── postman-collection.json
 ```
 
-### Design Patterns Utilisés
-
-#### 1. MVC (Model-View-Controller)
-Le projet sépare clairement les responsabilités :
-- **Models** (`src/models/`) : Définissent la structure des données (User, Team, Player, League)
-- **Controllers** (`src/controllers/`) : Gèrent les requêtes HTTP et les réponses
-- **Services** (`src/services/`) : Contiennent la logique métier
-
-#### 2. Middleware Pattern
-Express utilise une chaîne de middlewares pour traiter les requêtes :
-- `requireAuth` : Vérifie le token JWT
-- `logRequest` : Log les requêtes entrantes
-- `rateLimit` : Limite le nombre de requêtes par IP
-
-#### 3. Repository Pattern
-Les services agissent comme une couche d'abstraction entre les controllers et la base de données. Par exemple, `users.service.ts` gère toutes les opérations liées aux utilisateurs sans que le controller ait à connaître les détails de MongoDB.
-
-#### 4. Singleton Pattern
-La connexion MongoDB est initialisée une seule fois au démarrage du serveur et partagée dans toute l'application via Mongoose.
-
 ---
 
-## 2. Détails des Données
+## 2. Nos Données
 
-### Source des Données
+### D'où ça vient ?
 
-Les données proviennent de **API-Football** (https://www.api-football.com/), une API REST qui fournit des statistiques de football en temps réel.
+On utilise **API-Football** (https://www.api-football.com/) comme source. C'est une API payante qu'on a dû acheter pour avoir accès aux données complètes des 5 grands championnats.
 
-### Ligues Couvertes
+La collecte de données se fait **séparément** avec des scripts Python. On lance les scripts manuellement pour mettre à jour notre base de données.
 
-| ID | Ligue | Pays |
-|----|-------|------|
-| 39 | Premier League | Angleterre |
-| 61 | Ligue 1 | France |
-| 78 | Bundesliga | Allemagne |
-| 135 | Serie A | Italie |
-| 140 | La Liga | Espagne |
+### Les ligues qu'on couvre
 
-### Structure des Données
+On s'est concentrés sur les 5 grands championnats européens :
+- Premier League (Angleterre)
+- Ligue 1 (France)
+- Bundesliga (Allemagne)
+- Serie A (Italie)
+- La Liga (Espagne)
 
-Le projet utilise 7 collections MongoDB :
+### Ce qu'on stocke
 
-| Collection | Description | Champs principaux |
-|------------|-------------|-------------------|
-| `users` | Utilisateurs de l'API | email, username, password, favoris |
-| `players` | Informations des joueurs | apiId, name, age, nationality, photo |
-| `playerstats` | Stats des joueurs par saison | goals, assists, rating, minutes |
-| `teams` | Informations des équipes | apiId, name, country, logo |
-| `teamstats` | Stats des équipes par saison | wins, goalsFor, formation |
-| `leagues` | Informations des ligues | apiId, name, country, season |
-| `classements` | Classements des ligues | rank, points, wins, draws, losses |
+Notre base MongoDB contient plusieurs collections :
 
-### Mode de Collecte
+**Users** : Les utilisateurs de notre API, avec leur email, mot de passe hashé, et leurs favoris (équipes, joueurs, ligues qu'ils suivent).
 
-La collecte se fait via des scripts Python dans le dossier `collectePython/`. Ce n'est **pas du temps réel** : les données sont collectées périodiquement et stockées en base. La saison actuelle est 2025.
+**Players et PlayerStats** : Les infos des joueurs (nom, âge, nationalité, photo) et leurs stats par saison (buts, passes, note moyenne).
 
-Pour lancer la collecte :
+**Teams et TeamStats** : Les infos des équipes et leurs stats par saison.
+
+**Leagues et Classements** : Les ligues et leurs classements actuels.
+
+### La collecte Python
+
+Pour lancer la collecte des données :
+
 ```bash
 cd collectePython
 python main.py
 ```
 
+Ce script va chercher les données sur API-Football et les insère dans MongoDB. On le fait tourner de temps en temps pour garder nos données à jour (saison 2025).
+
 ---
 
 ## 3. Guide d'Installation
 
-### Prérequis
+### Ce qu'il vous faut
 
-- Node.js v18+
-- MongoDB (local ou Atlas)
-- Python 3.x (pour la collecte)
+- Node.js v18 ou plus
+- MongoDB (en local ou sur Atlas)
+- Python 3.x (si vous voulez lancer la collecte)
 
 ### Étape 1 : Cloner le projet
 
@@ -132,9 +124,9 @@ cd FootExplorerBackend
 npm install
 ```
 
-### Étape 3 : Configurer l'environnement
+### Étape 3 : Configurer
 
-Le fichier de configuration se trouve dans `config/default.json`. Modifiez-le selon vos besoins :
+Le fichier de config est dans `config/default.json`. Les trucs importants à vérifier :
 
 ```json
 {
@@ -143,37 +135,33 @@ Le fichier de configuration se trouve dans `config/default.json`. Modifiez-le se
   },
   "security": {
     "jwt": { 
-      "secret": "votre_secret_jwt", 
+      "secret": "changez_ce_secret_en_production", 
       "expiresIn": "1d" 
     }
   }
 }
 ```
 
-Pour la collecte Python, modifiez `collectePython/config.py` :
-```python
-API_KEY = "votre_cle_api_football"
-MONGO_URI = "mongodb://localhost:27017/"
-```
+Si vous voulez faire de la collecte, allez aussi modifier `collectePython/config.py` avec votre clé API.
 
 ### Étape 4 : Lancer le serveur
 
-**Mode développement :**
+**En développement :**
 ```bash
 npm run dev
 ```
 
-**Mode production :**
+**En production :**
 ```bash
 npm run build
 npm start
 ```
 
-Le serveur sera accessible sur `http://localhost:3000`.
+Le serveur tourne sur `http://localhost:3000`.
 
-### Étape 5 : Documentation Swagger
+### Étape 5 : Voir la doc Swagger
 
-Une fois le serveur lancé, accédez à la documentation interactive :
+Une fois le serveur lancé, vous pouvez voir et tester toutes les routes sur :
 
 ```
 http://localhost:3000/api-docs
@@ -183,7 +171,7 @@ http://localhost:3000/api-docs
 
 ## 4. Utilisation de l'API
 
-### Base URL
+### URL de base
 
 ```
 http://localhost:3000/api/v1
@@ -191,19 +179,18 @@ http://localhost:3000/api/v1
 
 ### Authentification
 
-La plupart des routes nécessitent un token JWT. Incluez-le dans le header :
+La plupart des routes demandent un token JWT. Après vous être connecté, ajoutez-le dans vos requêtes :
 
 ```
-Authorization: Bearer <votre_token>
+Authorization: Bearer votre_token_ici
 ```
 
-### Exemples de Requêtes
+### Exemples de requêtes
 
-#### Créer un compte
+**Créer un compte :**
 
 ```bash
 POST /api/v1/auth/register
-Content-Type: application/json
 
 {
   "email": "user@example.com",
@@ -213,22 +200,12 @@ Content-Type: application/json
 }
 ```
 
-**Réponse :**
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "user": {
-    "email": "user@example.com",
-    "username": "monuser"
-  }
-}
-```
+Réponse : vous recevez un token JWT à utiliser pour les autres requêtes.
 
-#### Se connecter
+**Se connecter :**
 
 ```bash
 POST /api/v1/auth/login
-Content-Type: application/json
 
 {
   "email": "user@example.com",
@@ -236,32 +213,31 @@ Content-Type: application/json
 }
 ```
 
-#### Récupérer les top joueurs d'une ligue
+**Voir les meilleurs buteurs d'une ligue :**
 
 ```bash
 GET /api/v1/players/top?leagueId=61&season=2025
 Authorization: Bearer <token>
 ```
 
-#### Rechercher un joueur
+**Chercher un joueur par nom :**
 
 ```bash
 GET /api/v1/players/search?q=mbappe
 Authorization: Bearer <token>
 ```
 
-#### Récupérer le classement d'une ligue
+**Voir le classement d'une ligue :**
 
 ```bash
 GET /api/v1/leagues/61/standings?season=2025
 ```
 
-#### Ajouter une équipe en favori
+**Ajouter une équipe en favori :**
 
 ```bash
 POST /api/v1/users/favorites
 Authorization: Bearer <token>
-Content-Type: application/json
 
 {
   "type": "team",
@@ -272,26 +248,22 @@ Content-Type: application/json
 
 ### Collection Postman
 
-Une collection Postman est disponible à la racine du projet : `postman-collection.json`
+On a préparé une collection Postman avec toutes les routes déjà configurées. Le fichier `postman-collection.json` est à la racine du projet.
 
 Pour l'utiliser :
 1. Ouvrez Postman
-2. Cliquez sur Import
-3. Sélectionnez le fichier
-4. Toutes les routes sont prêtes à tester
+2. Import → sélectionnez le fichier
+3. C'est prêt, toutes les routes sont là
 
 ---
 
 ## 5. Tests
 
-### Suite de Tests
+### Ce qu'on a testé
 
-Le projet inclut 56 tests automatisés :
-
-| Type | Nombre | Description |
-|------|--------|-------------|
-| Tests unitaires | 39 | Testent les services individuellement |
-| Tests d'intégration | 17 | Testent les routes de bout en bout |
+On a écrit 56 tests au total :
+- **39 tests unitaires** qui testent chaque service individuellement (auth, users, teams, players, leagues)
+- **17 tests d'intégration** qui testent les routes de bout en bout (on simule de vraies requêtes HTTP)
 
 ### Lancer les tests
 
@@ -299,37 +271,37 @@ Le projet inclut 56 tests automatisés :
 npm test
 ```
 
-### Lancer les tests avec couverture
+### Voir la couverture
 
 ```bash
 npm test -- --coverage
 ```
 
-La couverture actuelle est de **99%** sur les services.
+On a atteint **100% de couverture** sur tous nos fichiers de services. C'était important pour nous de tester les cas d'erreur aussi (genre quand un utilisateur essaie de se connecter avec un mauvais mot de passe).
 
 ### Tests de charge
 
-Pour vérifier la stabilité sous charge :
+On a aussi fait des tests de charge pour vérifier que notre API tient la route quand il y a plusieurs requêtes en même temps :
 
 ```bash
 npm run test:load
 ```
 
-Ce test simule plusieurs utilisateurs simultanés et vérifie que l'API répond correctement.
+Ça simule une montée en charge progressive (5, puis 10, puis 20 requêtes par seconde) et vérifie que le serveur répond correctement.
 
-### Structure des tests
+### Organisation des tests
 
 ```
 src/tests/
-├── setup.ts                    # Configuration MongoDB en mémoire
-├── auth.service.test.ts        # Tests du service auth
-├── users.service.test.ts       # Tests du service users
-├── teams.service.test.ts       # Tests du service teams
-├── players.service.test.ts     # Tests du service players
-├── leagues.service.test.ts     # Tests du service leagues
+├── setup.ts                    # Configure une DB en mémoire pour les tests
+├── auth.service.test.ts
+├── users.service.test.ts
+├── teams.service.test.ts
+├── players.service.test.ts
+├── leagues.service.test.ts
 └── integration/
-    ├── auth.integration.test.ts    # Tests routes auth
-    └── users.integration.test.ts   # Tests routes users
+    ├── auth.integration.test.ts
+    └── users.integration.test.ts
 ```
 
 ---
