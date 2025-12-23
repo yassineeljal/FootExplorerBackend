@@ -1,6 +1,6 @@
 {
     "info": {
-        "name": "FootExplorer API",
+        "name": "FootExplorer API - Corrigée",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "variable": [
@@ -15,10 +15,34 @@
     ],
     "item": [
         {
-            "name": "Auth",
+            "name": "1. Auth",
             "item": [
                 {
-                    "name": "Register",
+                    "name": "1.1 Register",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 201) {",
+                                    "    var jsonData = pm.response.json();",
+                                    "    pm.collectionVariables.set('token', jsonData.token);",
+                                    "    console.log('Token sauvegardé automatiquement!');",
+                                    "}",
+                                    "",
+                                    "pm.test('Inscription réussie', function () {",
+                                    "    pm.response.to.have.status(201);",
+                                    "});",
+                                    "",
+                                    "pm.test('Token reçu', function () {",
+                                    "    var jsonData = pm.response.json();",
+                                    "    pm.expect(jsonData).to.have.property('token');",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "header": [
@@ -29,7 +53,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"test@example.com\",\n    \"username\": \"testuser\",\n    \"password\": \"password123\",\n    \"name\": \"Test User\"\n}"
+                            "raw": "{\n    \"email\": \"test{{$timestamp}}@example.com\",\n    \"username\": \"testuser{{$timestamp}}\",\n    \"password\": \"password123\",\n    \"name\": \"Test User\"\n}"
                         },
                         "url": {
                             "raw": "{{baseUrl}}/auth/register",
@@ -44,7 +68,31 @@
                     }
                 },
                 {
-                    "name": "Login",
+                    "name": "1.2 Login",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "if (pm.response.code === 200) {",
+                                    "    var jsonData = pm.response.json();",
+                                    "    pm.collectionVariables.set('token', jsonData.token);",
+                                    "    console.log('Token sauvegardé automatiquement!');",
+                                    "}",
+                                    "",
+                                    "pm.test('Login réussi', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "pm.test('Token reçu', function () {",
+                                    "    var jsonData = pm.response.json();",
+                                    "    pm.expect(jsonData).to.have.property('token');",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "header": [
@@ -55,7 +103,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+                            "raw": "{\n    \"email\": \"demo@test.com\",\n    \"password\": \"password123\"\n}"
                         },
                         "url": {
                             "raw": "{{baseUrl}}/auth/login",
@@ -70,7 +118,25 @@
                     }
                 },
                 {
-                    "name": "Get Me",
+                    "name": "1.3 Get Me",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Utilisateur récupéré', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "pm.test('Email présent', function () {",
+                                    "    var jsonData = pm.response.json();",
+                                    "    pm.expect(jsonData.user).to.have.property('email');",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "header": [
@@ -94,10 +160,23 @@
             ]
         },
         {
-            "name": "Users",
+            "name": "2. Users",
             "item": [
                 {
-                    "name": "Get My Profile",
+                    "name": "2.1 Get My Profile",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Profil récupéré', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "header": [
@@ -119,7 +198,20 @@
                     }
                 },
                 {
-                    "name": "Update My Profile",
+                    "name": "2.2 Update My Profile",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Profil modifié', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "PATCH",
                         "header": [
@@ -149,7 +241,20 @@
                     }
                 },
                 {
-                    "name": "Add Favorite",
+                    "name": "2.3 Add Favorite Team",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Favori ajouté', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "header": [
@@ -164,7 +269,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"type\": \"team\",\n    \"apiId\": 123,\n    \"action\": \"add\"\n}"
+                            "raw": "{\n    \"type\": \"team\",\n    \"apiId\": 85,\n    \"action\": \"add\"\n}"
                         },
                         "url": {
                             "raw": "{{baseUrl}}/users/favorites",
@@ -179,7 +284,20 @@
                     }
                 },
                 {
-                    "name": "Get My Favorites",
+                    "name": "2.4 Get My Favorites",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Favoris récupérés', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "header": [
@@ -203,112 +321,28 @@
             ]
         },
         {
-            "name": "Teams",
+            "name": "3. Players",
             "item": [
                 {
-                    "name": "Get Team Stats",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
+                    "name": "3.1 Search Players",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Recherche réussie', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "pm.test('Résultats reçus', function () {",
+                                    "    var jsonData = pm.response.json();",
+                                    "    pm.expect(jsonData).to.have.property('data');",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
                             }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/teams/stats?teamName=Paris Saint-Germain&season=2025",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "teams",
-                                "stats"
-                            ],
-                            "query": [
-                                {
-                                    "key": "teamName",
-                                    "value": "Paris Saint-Germain"
-                                },
-                                {
-                                    "key": "season",
-                                    "value": "2025"
-                                }
-                            ]
                         }
-                    }
-                },
-                {
-                    "name": "Get Team Overview",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/teams/123/overview?leagueId=61&season=2025",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "teams",
-                                "123",
-                                "overview"
-                            ],
-                            "query": [
-                                {
-                                    "key": "leagueId",
-                                    "value": "61"
-                                },
-                                {
-                                    "key": "season",
-                                    "value": "2025"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Players",
-            "item": [
-                {
-                    "name": "Get Top Players",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/players/top?leagueId=61&season=2025",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "players",
-                                "top"
-                            ],
-                            "query": [
-                                {
-                                    "key": "leagueId",
-                                    "value": "61"
-                                },
-                                {
-                                    "key": "season",
-                                    "value": "2025"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "Search Players",
+                    ],
                     "request": {
                         "method": "GET",
                         "header": [
@@ -336,7 +370,20 @@
                     }
                 },
                 {
-                    "name": "Get Player Stats",
+                    "name": "3.2 Get Top Players (Ligue 1)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Top joueurs récupérés', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "header": [
@@ -346,16 +393,19 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/players/123/stats?season=2025",
+                            "raw": "{{baseUrl}}/players/top?league=61&season=2025",
                             "host": [
                                 "{{baseUrl}}"
                             ],
                             "path": [
                                 "players",
-                                "123",
-                                "stats"
+                                "top"
                             ],
                             "query": [
+                                {
+                                    "key": "league",
+                                    "value": "61"
+                                },
                                 {
                                     "key": "season",
                                     "value": "2025"
@@ -367,10 +417,60 @@
             ]
         },
         {
-            "name": "Leagues",
+            "name": "4. Leagues",
             "item": [
                 {
-                    "name": "Get League Overview",
+                    "name": "4.1 Get League Standings (Ligue 1)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Classement récupéré', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/leagues/61/standings?season=2025",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "leagues",
+                                "61",
+                                "standings"
+                            ],
+                            "query": [
+                                {
+                                    "key": "season",
+                                    "value": "2025"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "4.2 Get League Overview (Ligue 1)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Overview récupéré', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "GET",
                         "header": [
@@ -397,23 +497,49 @@
                             ]
                         }
                     }
-                },
+                }
+            ]
+        },
+        {
+            "name": "5. Teams",
+            "item": [
                 {
-                    "name": "Get League Standings",
+                    "name": "5.1 Get Team Stats (PSG)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test('Stats équipe récupérées', function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "GET",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
                         "url": {
-                            "raw": "{{baseUrl}}/leagues/61/standings?season=2025",
+                            "raw": "{{baseUrl}}/teams/stats?team=Monaco&season=2025",
                             "host": [
                                 "{{baseUrl}}"
                             ],
                             "path": [
-                                "leagues",
-                                "61",
-                                "standings"
+                                "teams",
+                                "stats"
                             ],
                             "query": [
+                                {
+                                    "key": "team",
+                                    "value": "Monaco"
+                                },
                                 {
                                     "key": "season",
                                     "value": "2025"
